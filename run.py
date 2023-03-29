@@ -1,5 +1,4 @@
-from universal_computation.experiment import run_experiment
-
+import universal_computation.experiment as experiment   
 
 if __name__ == '__main__':
 
@@ -31,4 +30,4 @@ if __name__ == '__main__':
         orth_gain=1.41,        # orthogonal initialization of input layer
     )
 
-    run_experiment(experiment_name, experiment_params)
+    experiment.run_experiment(experiment_name, experiment_params)

@@ -28,9 +28,11 @@ class Trainer:
         self.batch_size = batch_size
         self.eval_batch_size = eval_batch_size
         self.grad_accumulate = grad_accumulate
-
         self.optim = torch.optim.Adam(model.parameters(), lr=learning_rate)
-
+        self.name_list = [name for name, params in self.model.named_parameters()]
+        self.grad_dict = dict()
+        for name in self.name_list:
+            self.grad_dict[name] = list()
         self.diagnostics = {'Gradient Steps': 0}
 
     def get_loss(self, x, y, return_acc=False):
@@ -47,9 +49,8 @@ class Trainer:
             return loss, accs
         return loss
 
-    def train_epoch(self, test_steps=None):
+    def train_epoch(self, test_steps=None):   
         self.dataset.start_epoch()
-
         train_losses, tr_accuracy = [], 0.
         self.model.train()
         start_train_time = time.time()
@@ -60,6 +61,11 @@ class Trainer:
                 loss, acc = self.get_loss(x, y, return_acc=True)
                 loss = loss / self.grad_accumulate
                 loss.backward()
+                for name, params in self.model.named_parameters():
+                    if params.grad is None:
+                        continue
+                    else:
+                        self.grad_dict[name].append(torch.norm(params.grad).item())
                 step_loss += loss.detach().cpu().item()
                 tr_accuracy += acc
 
@@ -70,6 +76,7 @@ class Trainer:
             self.diagnostics['Gradient Steps'] += 1
 
             train_losses.append(step_loss)
+            
         end_train_time = time.time()
 
         test_steps = self.test_steps_per_epoch if test_steps is None else test_steps
@@ -93,3 +100,25 @@ class Trainer:
         self.diagnostics['Train Accuracy'] = tr_accuracy / (self.steps_per_epoch * self.grad_accumulate)
         self.diagnostics['Time Training'] = end_train_time - start_train_time
         self.diagnostics['Time Testing'] = end_test_time - start_test_time
+
+    def calculate_variance(self, top_n=5):
+        var_dict = dict()
+        for key in self.grad_dict.keys():
+            var_dict[key] = torch.var(torch.tensor(self.grad_dict[key])) 
+        var_dict = dict(sorted(var_dict.items(), key=lambda item: item[1]))
+        print('=' * 57)
+        print('Variance')
+        print('=' * 57)
+        for item in list(reversed(var_dict.keys()))[:top_n]:
+            print(f'{item} => {var_dict[item]}')
+
+    def calculate_mean(self, top_n=5):
+        mean_dict = dict()
+        for key in self.grad_dict.keys():
+            mean_dict[key] = torch.mean(torch.tensor(self.grad_dict[key])) 
+        mean_dict = dict(sorted(mean_dict.items(), key=lambda item: item[1]))
+        print('=' * 57)
+        print('Mean')
+        print('=' * 57)
+        for item in list(reversed(mean_dict.keys()))[:top_n]:
+            print(f'{item} => {mean_dict[item]}')

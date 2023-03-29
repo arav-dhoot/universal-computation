@@ -7,8 +7,8 @@ from datetime import datetime
 import random
 import sys
 
-from universal_computation.fpt import FPT
-from universal_computation.trainer import Trainer
+from .fpt import FPT
+from .trainer import Trainer
 
 
 def experiment(
@@ -209,6 +209,7 @@ def experiment(
                 torch.save(state_dict, f)
             print(f'Saved model at {t+1} iters: {run_name}')
 
+    trainer.calculate_variance()
 
 def run_experiment(
         exp_name,
@@ -216,7 +217,7 @@ def run_experiment(
 ):
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--num_iters', '-it', type=int, default=10000,
+    parser.add_argument('--num_iters', '-it', type=int, default=1,
                         help='Number of iterations for trainer')
     parser.add_argument('--steps_per_iter', type=int, default=100,
                         help='Number of gradient steps per iteration')
@@ -237,7 +238,7 @@ def run_experiment(
     parser.add_argument('--save_models_every', '-int', type=int, default=25,
                         help='How often to save models locally')
 
-    parser.add_argument('--device', '-d', type=str, default='cuda',
+    parser.add_argument('--device', '-d', type=str, default='mps',
                         help='Which device for Pytorch to use')
     parser.add_argument('--gpu_batch_size', '-gbs', type=int, default=16,
                         help='Max batch size to put on GPU (used for gradient accumulation)')
