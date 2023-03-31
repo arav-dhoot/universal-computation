@@ -217,7 +217,7 @@ def run_experiment(
 ):
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--num_iters', '-it', type=int, default=1,
+    parser.add_argument('--num_iters', '-it', type=int, default=100,
                         help='Number of iterations for trainer')
     parser.add_argument('--steps_per_iter', type=int, default=100,
                         help='Number of gradient steps per iteration')
@@ -238,7 +238,7 @@ def run_experiment(
     parser.add_argument('--save_models_every', '-int', type=int, default=25,
                         help='How often to save models locally')
 
-    parser.add_argument('--device', '-d', type=str, default='mps',
+    parser.add_argument('--device', '-d', type=str, default='cuda' if torch.cuda.is_available() else 'mps',
                         help='Which device for Pytorch to use')
     parser.add_argument('--gpu_batch_size', '-gbs', type=int, default=16,
                         help='Max batch size to put on GPU (used for gradient accumulation)')
