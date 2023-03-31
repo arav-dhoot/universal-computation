@@ -19,7 +19,7 @@ class FPT(nn.Module):
             freeze_pos=False,
             freeze_ln=False,
             freeze_attn=False,
-            freeze_ff=True,
+            freeze_ff=False,
             freeze_out=False,
             dropout=0.1,
             orth_gain=1.41,
