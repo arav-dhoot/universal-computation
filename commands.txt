@@ -1,0 +1,7 @@
+git config --global user.name "Arav Dhoot"
+git config --global user.email "aravdhoot@gmail.com"
+
+python run.py > log.log 2>&1 &
+tail -f log.log 
+ps -ef | grep python
+kill -9 [PID of the process]
