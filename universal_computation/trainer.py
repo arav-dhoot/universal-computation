@@ -113,9 +113,7 @@ class Trainer:
         for item in list(reversed(var_dict.keys()))[:top_n]:
             print(f'{item} => {var_dict[item]}')
         with open('data.json', 'w') as f:
-            json.dump(grad_dict, f)
-        with open('variance.json', 'w') as file:
-            json.dump(var_dict, file)
+            json.dump(self.grad_dict, f)
 
     def calculate_mean(self, top_n=5):
         mean_dict = dict()
