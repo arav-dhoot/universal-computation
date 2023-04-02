@@ -1,5 +1,6 @@
 import torch
 from tqdm import tqdm
+import json
 
 import time
 
@@ -111,6 +112,10 @@ class Trainer:
         print('=' * 57)
         for item in list(reversed(var_dict.keys()))[:top_n]:
             print(f'{item} => {var_dict[item]}')
+        with open('data.json', 'w') as f:
+            json.dump(grad_dict, f)
+        with open('variance.json', 'w') as file:
+            json.dump(var_dict, file)
 
     def calculate_mean(self, top_n=5):
         mean_dict = dict()
@@ -119,6 +124,6 @@ class Trainer:
         mean_dict = dict(sorted(mean_dict.items(), key=lambda item: item[1]))
         print('=' * 57)
         print('Mean')
-        print('=' * 57)
+        print('=' * 57)hon 
         for item in list(reversed(mean_dict.keys()))[:top_n]:
             print(f'{item} => {mean_dict[item]}')
