@@ -124,6 +124,6 @@ class Trainer:
         mean_dict = dict(sorted(mean_dict.items(), key=lambda item: item[1]))
         print('=' * 57)
         print('Mean')
-        print('=' * 57)hon 
+        print('=' * 57)
         for item in list(reversed(mean_dict.keys()))[:top_n]:
             print(f'{item} => {mean_dict[item]}')
