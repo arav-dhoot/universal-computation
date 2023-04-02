@@ -210,6 +210,7 @@ def experiment(
             print(f'Saved model at {t+1} iters: {run_name}')
 
     trainer.calculate_variance()
+    trainer.calculate_mean()
 
 def run_experiment(
         exp_name,
