@@ -209,8 +209,10 @@ def experiment(
                 torch.save(state_dict, f)
             print(f'Saved model at {t+1} iters: {run_name}')
 
+    trainer.file_write()
     trainer.calculate_variance()
     trainer.calculate_mean()
+
 
 def run_experiment(
         exp_name,

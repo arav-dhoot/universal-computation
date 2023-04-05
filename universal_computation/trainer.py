@@ -112,8 +112,13 @@ class Trainer:
         print('=' * 57)
         for item in list(reversed(var_dict.keys()))[:top_n]:
             print(f'{item} => {var_dict[item]}')
-        with open('data.json', 'w') as f:
-            json.dump(self.grad_dict, f)
+
+    def file_write(self):
+        with open('data.json', 'r') as file:
+            existing_data = json.load(file)
+        existing_data.update(self.grad_dict)
+        with open('data.json', 'w') as file:
+            json.dump(self.grad_dict, file, indent=4)
 
     def calculate_mean(self, top_n=5):
         mean_dict = dict()
