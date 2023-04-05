@@ -115,8 +115,11 @@ class Trainer:
 
     def file_write(self):
         with open('data.json', 'r') as file:
-            existing_data = json.load(file)
-        existing_data.update(self.grad_dict)
+            try:
+                existing_data = json.load(file)
+                existing_data.update(self.grad_dict)
+            except:
+                pass
         with open('data.json', 'w') as file:
             json.dump(self.grad_dict, file, indent=4)
 
