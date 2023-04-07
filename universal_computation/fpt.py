@@ -67,7 +67,7 @@ class FPT(nn.Module):
 
             self.vit_pos_embed = nn.Parameter(torch.zeros(1, 1024, embedding_size))
             if freeze_pos:
-                self.vit_pos_embed.requires_grad = False
+                self.vit_pos_embed.requires_grad = True
 
         elif model_name == 'lstm':
 
