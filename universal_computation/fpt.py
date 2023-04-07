@@ -133,21 +133,21 @@ class FPT(nn.Module):
             for name, p in self.sequence_model.named_parameters():
                 name = name.lower()
                 if 'ln' in name or 'norm' in name:
-                    p.requires_grad = not freeze_ln
+                    p.requires_grad = True
                 elif 'wpe' in name or 'position_embeddings' in name or 'pos_drop' in name:
-                    p.requires_grad = not freeze_pos
+                    p.requires_grad = True
                 elif 'mlp' in name:
-                    p.requires_grad = not freeze_ff
+                    p.requires_grad = True
                 elif 'attn' in name:
-                    p.requires_grad = not freeze_attn
+                    p.requires_grad = True
                 else:
                     p.requires_grad = True
         if freeze_in:
             for p in self.in_net.parameters():
-                p.requires_grad = False
+                p.requires_grad = True
         if freeze_out:
             for p in self.out_net.parameters():
-                p.requires_grad = False
+                p.requires_grad = True
 
     def forward(self, x):
 
