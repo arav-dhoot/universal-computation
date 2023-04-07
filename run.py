@@ -5,7 +5,7 @@ if __name__ == '__main__':
     experiment_name = 'fpt'
 
     experiment_params = dict(
-        task='bit-xor',
+        task='bit-memory',
         n=1000,                # ignored if not a bit task
         num_patterns=5,        # ignored if not a bit task
         patch_size=50,
