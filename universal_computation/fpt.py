@@ -141,7 +141,7 @@ class FPT(nn.Module):
                 elif 'attn' in name:
                     p.requires_grad = not freeze_attn
                 else:
-                    p.requires_grad = False
+                    p.requires_grad = True
         if freeze_in:
             for p in self.in_net.parameters():
                 p.requires_grad = False
