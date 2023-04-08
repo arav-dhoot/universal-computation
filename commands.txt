@@ -1,6 +1,6 @@
 git config --global user.name "Arav Dhoot"
 git config --global user.email "aravdhoot@gmail.com"
-pip install wandb tqdm transformers
+pip install wandb tqdm transformers einops
 
 python run.py > log.log 2>&1 &
 tail -f log.log 
