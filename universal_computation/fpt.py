@@ -14,13 +14,15 @@ class FPT(nn.Module):
             use_embeddings_for_in=False,
             in_layer_sizes=None,
             out_layer_sizes=None,
-            freeze_trans=False,
+            freeze_trans=True,
             freeze_in=False,
-            freeze_pos=False,
-            freeze_ln=False,
-            freeze_attn=False,
-            freeze_ff=False,
-            freeze_out=False,
+            freeze_pos=True,
+            freeze_ln=True,
+            freeze_attn=True,
+            freeze_ff=True,
+            freeze_out=True,
+            freeze_other=True,
+            optimized=False,
             dropout=0.1,
             orth_gain=1.41,
     ):
@@ -133,15 +135,15 @@ class FPT(nn.Module):
             for name, p in self.sequence_model.named_parameters():
                 name = name.lower()
                 if 'ln' in name or 'norm' in name:
-                    p.requires_grad = True
+                    p.requires_grad = not freeze_ln
                 elif 'wpe' in name or 'position_embeddings' in name or 'pos_drop' in name:
-                    p.requires_grad = True
+                    p.requires_grad = not freeze_pos
                 elif 'mlp' in name:
-                    p.requires_grad = True
+                    p.requires_grad = not freeze_ff
                 elif 'attn' in name:
-                    p.requires_grad = True
+                    p.requires_grad = not freeze_attn
                 else:
-                    p.requires_grad = True
+                    p.requires_grad = not freeze_other
         if freeze_in:
             for p in self.in_net.parameters():
                 p.requires_grad = True

@@ -5,7 +5,7 @@ if __name__ == '__main__':
     experiment_name = 'fpt'
 
     experiment_params = dict(
-        task='cifar10',
+        task='bit-xor',
         n=1000,                # ignored if not a bit task
         num_patterns=5,        # ignored if not a bit task
         # patch_size=50,       if the task is bit    
@@ -22,13 +22,16 @@ if __name__ == '__main__':
         freeze_ff=True,
         freeze_out=False,
 
+        training_type='frozen',
+
         in_layer_sizes=None,   # not in paper, but can specify layer sizes for an MLP,
         out_layer_sizes=None,  # ex. [32, 32] creates a 2-layer MLP with dimension 32
 
         learning_rate=1e-3,
         batch_size=4,
         dropout=0.1,
-        orth_gain=1.41,        # orthogonal initialization of input layer
+        orth_gain=1.41, 
+                      # orthogonal initialization of input layer
     )
 
     experiment.run_experiment(experiment_name, experiment_params)
