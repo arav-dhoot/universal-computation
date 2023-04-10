@@ -131,7 +131,7 @@ class FPT(nn.Module):
         out_layers.append(nn.Linear(last_output_size, output_dim))
         self.out_net = nn.Sequential(*out_layers)
 
-        if freeze_trans:
+        if freeze_trans and not optimized:
             for name, p in self.sequence_model.named_parameters():
                 name = name.lower()
                 if 'ln' in name or 'norm' in name:
@@ -144,6 +144,8 @@ class FPT(nn.Module):
                     p.requires_grad = not freeze_attn
                 else:
                     p.requires_grad = not freeze_other
+        if optimized:
+            
         if freeze_in:
             for p in self.in_net.parameters():
                 p.requires_grad = True
