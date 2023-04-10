@@ -19,6 +19,7 @@ class Trainer:
             batch_size=2,
             eval_batch_size=8,
             grad_accumulate=1,
+            task=None
     ):
         self.model = model
         self.dataset = dataset
@@ -35,6 +36,7 @@ class Trainer:
         for name in self.name_list:
             self.grad_dict[name] = list()
         self.diagnostics = {'Gradient Steps': 0}
+        self.task = task
 
     def get_loss(self, x, y, return_acc=False):
         out = self.model(x)
@@ -114,6 +116,7 @@ class Trainer:
             print(f'{item} => {var_dict[item]}')
 
     def file_write(self):
+        
         with open('data.json', 'w') as file:
             json.dump(self.grad_dict, file, indent=4)
 
