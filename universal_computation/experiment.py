@@ -130,6 +130,26 @@ def experiment(
     else:
         raise NotImplementedError('experiment_type not recognized')
 
+    if kwargs.geet('training_type') == 'frozen':
+        freeze_trans=True
+        freeze_in=True
+        freeze_pos=True
+        freeze_ln=True
+        freeze_attn=True
+        freeze_ff=True
+        freeze_other=True
+        freeze_out=False
+
+    elif kwargs.get('training_type') == 'finetune':
+        freeze_trans=False
+        freeze_in=False
+        freeze_pos=False
+        freeze_ln=False
+        freeze_attn=False
+        freeze_ff=False
+        freeze_other=False
+        freeze_out=False
+
     model = FPT(
         input_dim=input_dim,
         output_dim=output_dim,
@@ -139,13 +159,14 @@ def experiment(
         use_embeddings_for_in=use_embeddings,
         in_layer_sizes=kwargs.get('in_layer_sizes', None),
         out_layer_sizes=kwargs.get('out_layer_sizes', None),
-        freeze_trans=kwargs.get('freeze_trans', True),
-        freeze_in=kwargs.get('freeze_in', False),
-        freeze_pos=kwargs.get('freeze_pos', False),
-        freeze_ln=kwargs.get('freeze_ln', False),
-        freeze_attn=kwargs.get('freeze_attn', True),
-        freeze_ff=kwargs.get('freeze_ff', True),
-        freeze_out=kwargs.get('freeze_out', False),
+        freeze_trans=freeze_trans,
+        freeze_in=freeze_in,
+        freeze_pos=freeze_pos,
+        freeze_ln=freeze_ln,
+        freeze_attn=freeze_attn,
+        freeze_ff=freeze_ff,
+        freeze_other=freeze_other,
+        freeze_out=freeze_out,
         dropout=kwargs['dropout'],
         orth_gain=kwargs['orth_gain'],
     )
@@ -212,7 +233,6 @@ def experiment(
     trainer.file_write()
     trainer.calculate_variance()
     trainer.calculate_mean()
-
 
 def run_experiment(
         exp_name,
