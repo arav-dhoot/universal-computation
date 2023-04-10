@@ -130,7 +130,7 @@ def experiment(
     else:
         raise NotImplementedError('experiment_type not recognized')
 
-    if kwargs.geet('training_type') == 'frozen':
+    if kwargs.get('training_type') == 'frozen':
         freeze_trans=True
         freeze_in=True
         freeze_pos=True
@@ -139,6 +139,7 @@ def experiment(
         freeze_ff=True
         freeze_other=True
         freeze_out=False
+        optimized=False
 
     elif kwargs.get('training_type') == 'finetune':
         freeze_trans=False
@@ -149,6 +150,21 @@ def experiment(
         freeze_ff=False
         freeze_other=False
         freeze_out=False
+        optimized=False
+
+    elif kwargs.get('training_type') == 'optimized':
+        freeze_trans=True
+        freeze_in=True
+        freeze_pos=True
+        freeze_ln=True
+        freeze_attn=True
+        freeze_ff=True
+        freeze_other=True
+        freeze_out=False
+        optimized=True
+
+    else:
+        raise NotImplementedError('training_type not recognized')
 
     model = FPT(
         input_dim=input_dim,
@@ -167,6 +183,7 @@ def experiment(
         freeze_ff=freeze_ff,
         freeze_other=freeze_other,
         freeze_out=freeze_out,
+        optimized=optimized
         dropout=kwargs['dropout'],
         orth_gain=kwargs['orth_gain'],
     )
