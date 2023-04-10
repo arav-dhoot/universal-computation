@@ -183,7 +183,7 @@ def experiment(
         freeze_ff=freeze_ff,
         freeze_other=freeze_other,
         freeze_out=freeze_out,
-        optimized=optimized
+        optimized=optimized,
         dropout=kwargs['dropout'],
         orth_gain=kwargs['orth_gain'],
     )
