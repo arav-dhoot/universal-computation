@@ -1,3 +1,4 @@
+import json
 import torch
 import torch.nn as nn
 
@@ -14,6 +15,7 @@ class FPT(nn.Module):
             use_embeddings_for_in=False,
             in_layer_sizes=None,
             out_layer_sizes=None,
+            task=None,
             freeze_trans=True,
             freeze_in=False,
             freeze_pos=True,
@@ -145,7 +147,30 @@ class FPT(nn.Module):
                 else:
                     p.requires_grad = not freeze_other
         if optimized:
-            
+            try:
+                grad_dict = json.loads('../{task}_data.json')
+                var_dict = dict()
+                for key in grad_dict.keys():
+                    var_dict[key] = torch.var(torch.tensor(grad_dict[key]))
+                keys = reversed(var_dict.keys())
+                values = reversed(var_dict.values())
+                sorted_var_dict = dict()
+                counter=0
+                for key in keys:
+                    sorted_var_dict[key]=values[counter]
+                    counter+=1
+                print(sorted_var_dict)
+                counter=0
+                for value in sorted_var_dict.cumsum()/sorted_var_dict.sum():
+                    if value > 0.99:
+                        break
+                    else:
+                        counter+=1
+                value=counter-2
+                for key in keys[value:]:
+                    key.requires_grad = True
+            except:
+                raise NotImplementedError('json file not found')
         if freeze_in:
             for p in self.in_net.parameters():
                 p.requires_grad = True

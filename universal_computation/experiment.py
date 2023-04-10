@@ -175,6 +175,7 @@ def experiment(
         use_embeddings_for_in=use_embeddings,
         in_layer_sizes=kwargs.get('in_layer_sizes', None),
         out_layer_sizes=kwargs.get('out_layer_sizes', None),
+        task=kwargs.get('task'),
         freeze_trans=freeze_trans,
         freeze_in=freeze_in,
         freeze_pos=freeze_pos,
