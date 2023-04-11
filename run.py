@@ -95,5 +95,5 @@ if __name__ == '__main__':
     )
 
     experiment.run_experiment(experiment_name, frozen_params)
-    experiment.run_experiment(experiment_name, finetuned_params)
-    experiment.run_experiment(experiment_name, optimized_params)
+    # experiment.run_experiment(experiment_name, finetuned_params)
+    # experiment.run_experiment(experiment_name, optimized_params)

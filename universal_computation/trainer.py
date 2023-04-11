@@ -116,9 +116,14 @@ class Trainer:
             print(f'{item} => {var_dict[item]}')
 
     def file_write(self):
-        
-        with open('data.json', 'w') as file:
-            json.dump(self.grad_dict, file, indent=4)
+        file_name = f'{self.task}_data.json'
+        try:
+            file = open(file_name, 'x')
+            with open(file_name, 'w') as file:
+                json.dump(self.grad_dict, file, indent=4)
+        except:
+            with open(file_name, 'w') as file:
+                json.dump(self.grad_dict, file, indent=4)
 
     def calculate_mean(self, top_n=5):
         mean_dict = dict()
