@@ -2,7 +2,6 @@ import json
 import torch
 import torch.nn as nn
 
-
 class FPT(nn.Module):
 
     def __init__(
@@ -177,9 +176,8 @@ class FPT(nn.Module):
         if freeze_out:
             for p in self.out_net.parameters():
                 p.requires_grad = True
-
+    
     def forward(self, x):
-
         # reshape x (batch_size, seq_len, dim) into patches (batch_size, seq_len*num_patches, patch_dim)
         orig_dim = x.shape[-1]
         if orig_dim != self.input_dim and not self.use_embeddings_for_in:
@@ -189,7 +187,6 @@ class FPT(nn.Module):
             x = x.reshape(x.shape[0], x.shape[1] * ratio, self.input_dim)
         else:
             ratio = 1
-
         x = self.in_net(x)
 
         # ignore input layer that comes with model and use our own embeddings

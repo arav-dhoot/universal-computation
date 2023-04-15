@@ -200,6 +200,7 @@ def experiment(
         batch_size=gpu_batch_size if batch_size > gpu_batch_size else batch_size,
         eval_batch_size=batch_size,
         grad_accumulate=batch_size // gpu_batch_size if batch_size > gpu_batch_size else 1,
+        task=task
     )
 
     """
@@ -277,7 +278,7 @@ def run_experiment(
     parser.add_argument('--save_models_every', '-int', type=int, default=25,
                         help='How often to save models locally')
 
-    parser.add_argument('--device', '-d', type=str, default='cpu' if torch.cuda.is_available() else 'mps',
+    parser.add_argument('--device', '-d', type=str, default='cuda' if torch.cuda.is_available() else 'cpu',
                         help='Which device for Pytorch to use')
     parser.add_argument('--gpu_batch_size', '-gbs', type=int, default=16,
                         help='Max batch size to put on GPU (used for gradient accumulation)')
