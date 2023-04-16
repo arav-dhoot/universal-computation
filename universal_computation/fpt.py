@@ -147,33 +147,40 @@ class FPT(nn.Module):
                 else:
                     p.requires_grad = not freeze_other
         if optimized:
-            try:
-                path = "/root/universal-computation/"+ task + "_data.json"    
+            #try:
+                path = "/root/universal-computation/"+task+"_data.json"    
                 with open(path) as file:
                     grad_dict = json.load(file)
                 var_dict = dict()
                 for key in grad_dict.keys():
                     var_dict[key] = torch.var(torch.tensor(grad_dict[key]))
                 sorted_var_dict = dict(sorted(var_dict.items(), key=lambda x: x[1]))
-                import pdb; pdb.set_trace()
-                print(sorted_var_dict)
                 value_list = list()
                 key_list = list()
                 for key, value in sorted_var_dict.items():
                     value_list.append(value)
-                    key_list.apend(value)
-                value_list = np.
+                    key_list.append(key)
+                value_list = np.array(np.delete(value_list,0))
+                key_list = key_list[1:]
                 counter=0
-                for value in sorted_var_dict.cumsum()/sorted_var_dict.sum():
-                    if value > 0.99:
+                cumulative_list = np.array(np.cumsum(value_list)/np.sum(value_list))
+                print(cumulative_list)
+                for value in cumulative_list:
+                    if value > 0.01:
                         break
                     else:
                         counter+=1
-                value=counter-2
-                for key in keys[value:]:
-                    key.requires_grad = True
-            except:
-                raise NotImplementedError('json file not found')
+                value=counter-1
+                print(cumulative_list[counter-1:])
+                print(key_list[counter-1:])
+                for name, p in self.sequence_model.named_parameters():
+                    name = name.lower()
+                    for key in key_list[value:]: 
+                      if key in name:
+                        print(key)
+                        p.requires_grad = True
+            #except:
+                #raise NotImplementedError('json file not found')
         if freeze_in:
             for p in self.in_net.parameters():
                 p.requires_grad = True
