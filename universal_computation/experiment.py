@@ -45,7 +45,7 @@ def experiment(
         use_embeddings = False
         experiment_type = 'classification'
 
-    elif task == 'bit-xor':
+    elif task == 'bit_xor':
         from universal_computation.datasets.bit_xor import BitXORDataset
         dataset = BitXORDataset(n=kwargs['n'], num_patterns=kwargs['num_patterns'], device=device)
         input_dim = kwargs['n'] if patch_size is None else patch_size

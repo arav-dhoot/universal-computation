@@ -1,5 +1,6 @@
 import json
 import torch
+import numpy as np
 import torch.nn as nn
 
 class FPT(nn.Module):
@@ -147,18 +148,21 @@ class FPT(nn.Module):
                     p.requires_grad = not freeze_other
         if optimized:
             try:
-                grad_dict = json.loads('../{task}_data.json')
+                path = "/root/universal-computation/"+ task + "_data.json"    
+                with open(path) as file:
+                    grad_dict = json.load(file)
                 var_dict = dict()
                 for key in grad_dict.keys():
                     var_dict[key] = torch.var(torch.tensor(grad_dict[key]))
-                keys = reversed(var_dict.keys())
-                values = reversed(var_dict.values())
-                sorted_var_dict = dict()
-                counter=0
-                for key in keys:
-                    sorted_var_dict[key]=values[counter]
-                    counter+=1
+                sorted_var_dict = dict(sorted(var_dict.items(), key=lambda x: x[1]))
+                import pdb; pdb.set_trace()
                 print(sorted_var_dict)
+                value_list = list()
+                key_list = list()
+                for key, value in sorted_var_dict.items():
+                    value_list.append(value)
+                    key_list.apend(value)
+                value_list = np.
                 counter=0
                 for value in sorted_var_dict.cumsum()/sorted_var_dict.sum():
                     if value > 0.99:
