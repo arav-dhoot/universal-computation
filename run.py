@@ -8,7 +8,7 @@ if __name__ == '__main__':
         task='bit-memory',
         n=1000,                # ignored if not a bit task
         num_patterns=5,        # ignored if not a bit task
-        patch_size=4,        
+        patch_size=50,        
         # patch_size=4,
 
         model_name='gpt2',
@@ -38,7 +38,7 @@ if __name__ == '__main__':
         task='bit-memory',
         n=1000,                # ignored if not a bit task
         num_patterns=5,        # ignored if not a bit task
-        patch_size=4,       
+        patch_size=50,       
         # patch_size=4,
 
         model_name='gpt2',
@@ -68,7 +68,7 @@ if __name__ == '__main__':
         task='bit-memory',
         n=1000,                # ignored if not a bit task
         num_patterns=5,        # ignored if not a bit task
-        patch_size=4,          
+        patch_size=50,          
         # patch_size=4,
 
         model_name='gpt2',
