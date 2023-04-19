@@ -164,20 +164,16 @@ class FPT(nn.Module):
                 key_list = key_list[1:]
                 counter=0
                 cumulative_list = np.array(np.cumsum(value_list)/np.sum(value_list))
-                print(cumulative_list)
                 for value in cumulative_list:
                     if value > 0.01:
                         break
                     else:
                         counter+=1
                 value=counter-1
-                print(cumulative_list[counter-1:])
-                print(key_list[counter-1:])
                 for name, p in self.sequence_model.named_parameters():
                     name = name.lower()
                     for key in key_list[value:]: 
                       if key in name:
-                        print(key)
                         p.requires_grad = True
             #except:
                 #raise NotImplementedError('json file not found')
