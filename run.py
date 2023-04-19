@@ -5,10 +5,10 @@ if __name__ == '__main__':
     experiment_name = 'fpt'
 
     frozen_params = dict(
-        task='bit-memory',
+        task='cifar10',
         n=1000,                # ignored if not a bit task
         num_patterns=5,        # ignored if not a bit task
-        patch_size=50,        
+        patch_size=4,        
         # patch_size=4,
 
         model_name='gpt2',
@@ -35,10 +35,10 @@ if __name__ == '__main__':
     )
 
     finetuned_params = dict(
-        task='bit-memory',
+        task='cifar10',
         n=1000,                # ignored if not a bit task
         num_patterns=5,        # ignored if not a bit task
-        patch_size=50,       
+        patch_size=4,       
         # patch_size=4,
 
         model_name='gpt2',
@@ -65,10 +65,10 @@ if __name__ == '__main__':
     )
 
     optimized_params = dict(
-        task='bit-memory',
+        task='cifar10',
         n=1000,                # ignored if not a bit task
         num_patterns=5,        # ignored if not a bit task
-        patch_size=50,          
+        patch_size=4,          
         # patch_size=4,
 
         model_name='gpt2',
