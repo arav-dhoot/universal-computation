@@ -4,7 +4,7 @@ pip install wandb tqdm transformers einops
 
 for testing: python run.py --num_iters 100
 
-python run.py > log.log 2>&1 &
+python run.py --num_iters 100 > log.log 2>&1 &
 tail -f log.log 
 ps -ef | grep python
 kill -9 [PID of the process]
