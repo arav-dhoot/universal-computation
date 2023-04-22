@@ -228,7 +228,7 @@ def experiment(
             project=wandb_project,
             config=config,
         )
-        wandb.watch(model)
+        wandb.watch(model, log='all')
 
     for t in range(exp_args['num_iters']):
         trainer.train_epoch()
