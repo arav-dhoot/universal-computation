@@ -265,7 +265,7 @@ def run_experiment(
     parser.add_argument('--test_steps_per_iter', type=int, default=25,
                         help='Number of test gradient steps per iteration')
 
-    parser.add_argument('--log_to_wandb', '-w', type=bool, default=False,
+    parser.add_argument('--log_to_wandb', '-w', type=bool, default=True,
                         help='Whether or not to log to Weights and Biases')
     parser.add_argument('--note', '-n', type=str, default='',
                         help='An optional note to be logged to W&B')
