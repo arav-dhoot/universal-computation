@@ -45,7 +45,7 @@ def experiment(
         use_embeddings = False
         experiment_type = 'classification'
 
-    elif task == 'bit_xor':
+    elif task == 'bit-xor':
         from universal_computation.datasets.bit_xor import BitXORDataset
         dataset = BitXORDataset(n=kwargs['n'], num_patterns=kwargs['num_patterns'], device=device)
         input_dim = kwargs['n'] if patch_size is None else patch_size
@@ -126,6 +126,7 @@ def experiment(
         def accuracy_fn(preds, true, x=None):
             preds = preds[:, 0].argmax(-1)
             return (preds == true).mean()
+
     else:
         raise NotImplementedError('experiment_type not recognized')
 
@@ -161,6 +162,7 @@ def experiment(
         freeze_other=True
         freeze_out=False
         optimized=True
+
     else:
         raise NotImplementedError('training_type not recognized')
 
@@ -200,7 +202,6 @@ def experiment(
         batch_size=gpu_batch_size if batch_size > gpu_batch_size else batch_size,
         eval_batch_size=batch_size,
         grad_accumulate=batch_size // gpu_batch_size if batch_size > gpu_batch_size else 1,
-        task=task
     )
 
     """
