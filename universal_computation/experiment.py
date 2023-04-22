@@ -269,7 +269,7 @@ def run_experiment(
                         help='Whether or not to log to Weights and Biases')
     parser.add_argument('--note', '-n', type=str, default='',
                         help='An optional note to be logged to W&B')
-    parser.add_argument('--wandb_project', type=str, default='my_project',
+    parser.add_argument('--wandb_project', type=str, default='universal-computation',
                         help='Project name for W&B')
     parser.add_argument('--include_date', type=bool, default=True,
                         help='Whether to include date in run name')
