@@ -173,8 +173,10 @@ class FPT(nn.Module):
                 for name, p in self.sequence_model.named_parameters():
                     name = name.lower()
                     for key in key_list[value:]: 
-                      if key in name:
-                        p.requires_grad = True
+                        if key in name:
+                            p.requires_grad = True
+                        else:
+                            p.requires_grad = False
             #except:
                 #raise NotImplementedError('json file not found')
         if freeze_in:
