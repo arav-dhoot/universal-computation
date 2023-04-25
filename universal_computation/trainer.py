@@ -116,7 +116,7 @@ class Trainer:
             print(f'{item} => {var_dict[item]}')
 
     def file_write(self):
-        file_name = f'{self.task}_data.json'
+        file_name = f'{self.task}-data.json'
         try:
             file = open(file_name, 'x')
             with open(file_name, 'w') as file:
