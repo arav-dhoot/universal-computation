@@ -252,6 +252,8 @@ def experiment(
     trainer.calculate_variance()
     trainer.calculate_mean()
 
+    wandb.save(f'/json_training_files/{task}-data.json')
+
 def run_experiment(
         exp_name,
         experiment_params,
