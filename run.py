@@ -5,7 +5,7 @@ if __name__ == '__main__':
     experiment_name = 'fpt'
 
     frozen_params = dict(
-        task='bit_xor',
+        task='bit-xor',
         n=1000,                # ignored if not a bit task
         num_patterns=5,        # ignored if not a bit task
         patch_size=50,        
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     )
 
     finetuned_params = dict(
-        task='bit_xor',
+        task='bit-xor',
         n=1000,                # ignored if not a bit task
         num_patterns=5,        # ignored if not a bit task
         patch_size=50,       
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     )
 
     optimized_params = dict(
-        task='bit_xor',
+        task='bit-xor',
         n=1000,                # ignored if not a bit task
         num_patterns=5,        # ignored if not a bit task
         patch_size=50,          
