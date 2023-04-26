@@ -148,7 +148,7 @@ class FPT(nn.Module):
                     p.requires_grad = not freeze_other
         if optimized:
             #try:
-                path = "/root/universal-computation/"+task+"_data.json"    
+                path = "/root/universal-computation/"+task+"-data.json"    
                 with open(path) as file:
                     grad_dict = json.load(file)
                 var_dict = dict()
