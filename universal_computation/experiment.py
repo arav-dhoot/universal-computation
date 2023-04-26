@@ -202,6 +202,7 @@ def experiment(
         batch_size=gpu_batch_size if batch_size > gpu_batch_size else batch_size,
         eval_batch_size=batch_size,
         grad_accumulate=batch_size // gpu_batch_size if batch_size > gpu_batch_size else 1,
+        task=task
     )
 
     """
