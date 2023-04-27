@@ -131,6 +131,7 @@ def experiment(
         raise NotImplementedError('experiment_type not recognized')
 
     if kwargs.get('training_type') == 'frozen':
+        training_type = 'frozen'
         freeze_trans=True
         freeze_in=True
         freeze_pos=True
@@ -142,6 +143,7 @@ def experiment(
         optimized=False
 
     elif kwargs.get('training_type') == 'finetune':
+        training_type = 'finetune'
         freeze_trans=False
         freeze_in=False
         freeze_pos=False
@@ -153,6 +155,7 @@ def experiment(
         optimized=False
 
     elif kwargs.get('training_type') == 'optimized':
+        training_type = 'optimized'
         freeze_trans=True
         freeze_in=True
         freeze_pos=True
@@ -224,7 +227,7 @@ def experiment(
             **kwargs,
         )
         wandb.init(
-            name=f'{exp_name}-{short_name}',
+            name=f'{exp_name}-{short_name}-{training_type}',
             group=f'{exp_name}-{task}',
             project=wandb_project,
             config=config,
