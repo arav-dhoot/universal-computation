@@ -175,11 +175,9 @@ class FPT(nn.Module):
                 for name, p in self.sequence_model.named_parameters():
                     name = name.lower()
                     total_parameters += torch.numel(p)
-                    print(key_list[value:])
                     for key in key_list[value:]: 
-                        if key in name:
+                        if name in key:
                             p.requires_grad = True
-                            import pdb;pdb.set_trace()
                             trainable_parameters += torch.numel(p)
                         else:
                             p.requires_grad = False

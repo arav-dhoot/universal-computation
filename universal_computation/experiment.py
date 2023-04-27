@@ -227,7 +227,7 @@ def experiment(
             **kwargs,
         )
         wandb.init(
-            name=f'{exp_name}-{short_name}-{training_type}',
+            name=f'{exp_name}-{short_name}-{training_type}-{task}',
             group=f'{exp_name}-{task}',
             project=wandb_project,
             config=config,
@@ -252,7 +252,7 @@ def experiment(
                 torch.save(state_dict, f)
             print(f'Saved model at {t+1} iters: {run_name}')
 
-    trainer.file_write()
+    if training_type == 'finetune': trainer.file_write()
     trainer.calculate_variance()
     trainer.calculate_mean()
 
