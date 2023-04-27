@@ -170,13 +170,24 @@ class FPT(nn.Module):
                     else:
                         counter+=1
                 value=counter-1
+                total_parameters = 0
+                trainable_parameters = 0
                 for name, p in self.sequence_model.named_parameters():
                     name = name.lower()
+                    total_parameters += torch.numel(p)
+                    print(key_list[value:])
                     for key in key_list[value:]: 
                         if key in name:
                             p.requires_grad = True
+                            import pdb;pdb.set_trace()
+                            trainable_parameters += torch.numel(p)
                         else:
                             p.requires_grad = False
+                print('=' * 57)
+                print(trainable_parameters)
+                print(total_parameters)
+                print(f'Trainable Parameter Percentage: {trainable_parameters/total_parameters}')
+                print('=' * 57)
             #except:
                 #raise NotImplementedError('json file not found')
         if freeze_in:
