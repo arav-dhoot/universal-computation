@@ -108,6 +108,7 @@ class Trainer:
         self.diagnostics['Time Testing'] = end_test_time - start_test_time
 
     def calculate_variance(self, top_n=5):
+        import pdb;pdb.set_trace()
         var_dict = dict()
         for key in self.grad_dict.keys():
             var_dict[key] = torch.var(torch.tensor(self.grad_dict[key])) 
