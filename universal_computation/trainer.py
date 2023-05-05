@@ -59,6 +59,7 @@ class Trainer:
         start_train_time = time.time()
         for _ in tqdm(range(self.steps_per_epoch)):
             step_loss = 0
+            counter = 0
             for _ in range(self.grad_accumulate):
                 x, y = self.dataset.get_batch(self.batch_size, train=True)
                 loss, acc = self.get_loss(x, y, return_acc=True)
@@ -67,10 +68,12 @@ class Trainer:
                 for name, params in self.model.named_parameters():
                     if params.grad is None:
                         continue
-                    else:
-                        self.grad_dict[name].append(torch.norm(params.grad).item())
+                    elif params.grad is not None and counter % 3==0:
+                        self.grad_dict[name].append(torch.round(torch.norm(params.grad).item()), decimals=3)
                 step_loss += loss.detach().cpu().item()
                 tr_accuracy += acc
+                counter +=1
+
 
             torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.)
             self.optim.step()
