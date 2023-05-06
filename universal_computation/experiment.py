@@ -6,6 +6,7 @@ import argparse
 from datetime import datetime
 import random
 import sys
+import os
 
 from .fpt import FPT
 from .trainer import Trainer
@@ -252,11 +253,12 @@ def experiment(
                 torch.save(state_dict, f)
             print(f'Saved model at {t+1} iters: {run_name}')
 
-    if training_type == 'finetune': trainer.file_write()
+    if training_type == 'finetune': 
+        trainer.file_write()
+        wandb.save(f'{task}-data.json')
     trainer.calculate_variance()
     trainer.calculate_mean()
-
-    wandb.save(f'{task}-data.json')
+    wandb.finish()
 
 def run_experiment(
         exp_name,
