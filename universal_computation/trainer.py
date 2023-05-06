@@ -69,7 +69,7 @@ class Trainer:
                     if params.grad is None:
                         continue
                     elif params.grad is not None and counter % 3==0:
-                        self.grad_dict[name].append(round(torch.norm(params.grad).item()), 3)
+                        self.grad_dict[name].append(round(torch.norm(params.grad).item(), 3))
                 step_loss += loss.detach().cpu().item()
                 tr_accuracy += acc
                 counter +=1
