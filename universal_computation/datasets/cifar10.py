@@ -39,7 +39,7 @@ class CIFAR10Dataset(Dataset):
         )
         self.d_test = DataLoader(
             torchvision.datasets.CIFAR10('data/cifar', download=True, train=False, transform=val_transform),
-            batch_size=batch_size, drop_last=True, shuffle=True,
+            batch_size=batch_size, drop_last=False, shuffle=False,
         )
 
         self.train_enum = enumerate(self.d_train)
