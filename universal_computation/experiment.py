@@ -166,6 +166,20 @@ def experiment(
         freeze_other=True
         freeze_out=False
         optimized=True
+        optimized_type='variance'
+
+    elif kwargs.get('training_type') == 'snr':
+        training_type = 'optimized'
+        freeze_trans=True
+        freeze_in=True
+        freeze_pos=True
+        freeze_ln=True
+        freeze_attn=True
+        freeze_ff=True
+        freeze_other=True
+        freeze_out=False
+        optimized=True
+        optimized_type='snr'
 
     else:
         raise NotImplementedError('training_type not recognized')
@@ -189,6 +203,7 @@ def experiment(
         freeze_other=freeze_other,
         freeze_out=freeze_out,
         optimized=optimized,
+        optimized_type=optimized_type,
         dropout=kwargs['dropout'],
         orth_gain=kwargs['orth_gain'],
     )
