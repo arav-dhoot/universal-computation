@@ -11,3 +11,4 @@ MANIFEST
 /models
 /.ipynb_checkpoints
 log.log
+/json_running_files
