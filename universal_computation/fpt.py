@@ -26,6 +26,7 @@ class FPT(nn.Module):
             freeze_out=True,
             freeze_other=True,
             optimized=False,
+            optimized_type=None,
             dropout=0.1,
             orth_gain=1.41,
     ):
@@ -147,7 +148,7 @@ class FPT(nn.Module):
                     p.requires_grad = not freeze_attn
                 else:
                     p.requires_grad = not freeze_other
-        if optimized:
+        elif optimized and optimized_type=='variance':
             #try:
                 path = "/root/universal-computation/"+task+"-data.json"    
                 with open(path) as file:
@@ -189,6 +190,47 @@ class FPT(nn.Module):
                 print('=' * 57)
             #except:
                 #raise NotImplementedError('json file not found')
+        elif optimized and optimized_type=='snr':
+            with open(path) as file:
+                grad_dict = json.load(file)
+            snr_dict = dict()
+            for key in grad_dict.keys():
+                var = torch.var(torch.tensor(grad_dict[key]))
+                mean = torch.mean(torch.tensor(grad_dict[key]))
+                snr_dict[key] = (mean ** 2)/var
+            sorted_snr_dict = dict(sorted(snr_dict.items(), key=lambda x: x[1]))
+            value_list = list()
+            key_list = list()
+            for key, value in sorted_snr_dict.items():
+                value_list.append(value)
+                key_list.append(key)
+            value_list = np.array(np.delete(value_list,0))
+            key_list = key_list[1:]
+            counter=0
+            cumulative_list = np.array(np.cumsum(value_list)/np.sum(value_list))
+            for value in cumulative_list:
+                if value > 0.01:
+                    break
+                else:
+                    counter+=1
+            value=counter-1
+            total_parameters = 0
+            trainable_parameters = 0
+            for name, p in self.sequence_model.named_parameters():
+                name = name.lower()
+                total_parameters += torch.numel(p)
+                for key in key_list[value:]: 
+                    if name in key:
+                        p.requires_grad = True
+                        trainable_parameters += torch.numel(p)
+                    else:
+                        p.requires_grad = False
+            print('=' * 57)
+            print(trainable_parameters)
+            print(total_parameters)
+            print(f'Trainable Parameter Percentage: {trainable_parameters/total_parameters}')
+            print('=' * 57)           
+        
         if freeze_in:
             for p in self.in_net.parameters():
                 p.requires_grad = True
