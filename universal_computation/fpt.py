@@ -191,6 +191,7 @@ class FPT(nn.Module):
             #except:
                 #raise NotImplementedError('json file not found')
         elif optimized and optimized_type=='snr':
+            path = "/root/universal-computation/"+task+"-data.json"
             with open(path) as file:
                 grad_dict = json.load(file)
             snr_dict = dict()

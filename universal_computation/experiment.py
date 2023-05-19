@@ -142,6 +142,7 @@ def experiment(
         freeze_other=True
         freeze_out=False
         optimized=False
+        optimized_type=None
 
     elif kwargs.get('training_type') == 'finetune':
         training_type = 'finetune'
@@ -154,6 +155,7 @@ def experiment(
         freeze_other=False
         freeze_out=False
         optimized=False
+        optimized_type=None
 
     elif kwargs.get('training_type') == 'optimized':
         training_type = 'optimized'
