@@ -1,6 +1,6 @@
 git config --global user.name "Arav Dhoot"
 git config --global user.email "aravdhoot@gmail.com"
-pip install wandb==0.15.0 tqdm transformers einops
+pip install wandb==0.15.0 tqdm transformers einops protobuf==3.20.0
 
 for testing: python run.py --num_iters 100
 
